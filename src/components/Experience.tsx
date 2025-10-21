@@ -31,7 +31,6 @@ export function Experience() {
                 <p className="experience-role">{exp.role}</p>
                 <p className="experience-period">{exp.period}</p>
               </div>
-              <span className="project-grade">{exp.grade}</span>
             </div>
 
             <ul className="experience-highlights">

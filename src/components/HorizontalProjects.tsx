@@ -12,7 +12,7 @@ export function HorizontalProjects() {
   const x = useTransform(
     scrollYProgress,
     [0, 1],
-    ['0%', `-${(resumeData.projects.length - 1) * 25}%`]
+    ['5%', `-${resumeData.projects.length * 22}%`]
   );
 
   return (
@@ -41,12 +41,7 @@ export function HorizontalProjects() {
               viewport={{ once: true, margin: '-100px' }}
               whileHover={{ scale: 1.05, rotateY: 5 }}
             >
-              <div className="project-grade-large">{project.grade}</div>
-
               <div className="project-dual-rank">
-                <span className="climbing-rank" title="Bouldering Grade">
-                  🧗 {project.grade}
-                </span>
                 <span className="chess-rank" title="Chess Skill Level">
                   ♔ {project.chessRank}
                 </span>

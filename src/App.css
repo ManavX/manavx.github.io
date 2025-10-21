@@ -577,9 +577,10 @@ body {
 
 .horizontal-scroll-container {
   display: flex;
-  gap: 3rem;
-  padding: 0 10vw;
+  gap: 2rem;
+  padding: 0 5vw;
   will-change: transform;
+  align-items: center;
 }
 
 .horizontal-project-card {
@@ -611,16 +612,6 @@ body {
   transform: perspective(1000px) rotateY(0deg) !important;
 }
 
-.project-grade-large {
-  position: absolute;
-  top: 2rem;
-  right: 2rem;
-  font-size: 4rem;
-  font-weight: 900;
-  color: var(--project-color, #667eea);
-  opacity: 0.15;
-  line-height: 1;
-}
 
 .horizontal-project-card h3 {
   font-size: 2rem;
@@ -633,12 +624,11 @@ body {
 .project-dual-rank {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   position: relative;
   z-index: 1;
 }
 
-.climbing-rank,
 .chess-rank {
   background: rgba(255, 255, 255, 0.08);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -650,19 +640,10 @@ body {
   align-items: center;
   gap: 0.5rem;
   transition: all 0.3s ease;
-}
-
-.climbing-rank {
-  color: #667eea;
-  border-color: rgba(102, 126, 234, 0.3);
-}
-
-.chess-rank {
   color: #f4f4f4;
   border-color: rgba(244, 244, 244, 0.3);
 }
 
-.climbing-rank:hover,
 .chess-rank:hover {
   transform: translateY(-3px);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
