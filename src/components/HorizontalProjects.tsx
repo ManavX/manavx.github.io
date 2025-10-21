@@ -1,35 +1,21 @@
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { resumeData } from '../data/resumeData';
 
 export function HorizontalProjects() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start end', 'end start'],
-  });
-
-  const x = useTransform(
-    scrollYProgress,
-    [0, 1],
-    ['5%', `-${resumeData.projects.length * 22}%`]
-  );
-
   return (
-    <section ref={containerRef} className="horizontal-section">
-      <div className="sticky-container">
-        <motion.div
-          initial={{ opacity: 0, y: 50 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="section-header"
-        >
-          <h2 className="section-title">Strategic Moves</h2>
-          <p className="section-subtitle">Projects ranked by complexity — each a calculated gambit</p>
-        </motion.div>
+    <section className="projects-section">
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+        className="section-header"
+      >
+        <h2 className="section-title">Strategic Moves</h2>
+        <p className="section-subtitle">Projects ranked by complexity — each a calculated gambit</p>
+      </motion.div>
 
-        <motion.div className="horizontal-scroll-container" style={{ x }}>
+      <div className="projects-grid-container">
           {resumeData.projects.map((project, index) => (
             <motion.div
               key={index}
@@ -67,7 +53,6 @@ export function HorizontalProjects() {
               </ul>
             </motion.div>
           ))}
-        </motion.div>
       </div>
     </section>
   );
