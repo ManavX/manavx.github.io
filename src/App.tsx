@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useSmoothScroll } from './hooks/useSmoothScroll';
 import { FrameByFrameGif } from './components/FrameByFrameGif';
 import { Hero } from './components/Hero';
@@ -12,17 +11,12 @@ import './App.css';
 
 function App() {
   const scrollProgress = useSmoothScroll();
-  const [visibleSections, setVisibleSections] = useState({
-    skills: false,
-    projects: false,
-    experience: false,
-  });
 
-  const toggleSection = (section: 'skills' | 'projects' | 'experience') => {
-    setVisibleSections((prev) => ({
-      ...prev,
-      [section]: !prev[section],
-    }));
+  const scrollToSection = (section: 'skills' | 'projects' | 'experience') => {
+    const element = document.getElementById(section);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
   };
 
   return (
@@ -30,18 +24,20 @@ function App() {
       <ScrollProgress />
       <CustomCursor />
       <FrameByFrameGif scrollProgress={scrollProgress} />
-      <ChessPieceNav
-        onToggle={toggleSection}
-        visibleSections={visibleSections}
-      />
+      <ChessPieceNav onScrollTo={scrollToSection} />
       <Hero />
 
-      {/* Spacer to enable scrolling */}
-      <div className="content-spacer" />
+      <div id="projects">
+        <HorizontalProjects />
+      </div>
 
-      {visibleSections.projects && <HorizontalProjects />}
-      {visibleSections.skills && <Skills />}
-      {visibleSections.experience && <Experience />}
+      <div id="skills">
+        <Skills />
+      </div>
+
+      <div id="experience">
+        <Experience />
+      </div>
     </div>
   );
 }
