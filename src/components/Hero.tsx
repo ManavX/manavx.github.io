@@ -35,20 +35,11 @@ export function Hero() {
           {resumeData.title}
         </motion.h2>
 
-        <motion.p
-          className="hero-subtitle"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          Strategic climber thinking three moves ahead
-        </motion.p>
-
         <motion.div
           className="contact-links"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.8, delay: 0.8 }}
+          transition={{ duration: 0.8, delay: 0.6 }}
         >
           <a href={`mailto:${resumeData.contact.email}`} className="contact-link">
             Email
@@ -62,7 +53,7 @@ export function Hero() {
             GitHub
           </a>
           <a
-            href={`https://linkedin.com/in/${resumeData.contact.linkedin}`}
+            href={resumeData.contact.linkedin}
             target="_blank"
             rel="noopener noreferrer"
             className="contact-link"

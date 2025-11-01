@@ -11,7 +11,6 @@ export function Experience() {
         viewport={{ once: true }}
       >
         <h2 className="section-title">Career Endgame</h2>
-        <p className="section-subtitle">Strategic positions played in the professional arena</p>
       </motion.div>
 
       <div className="experience-container">

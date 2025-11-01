@@ -34,7 +34,6 @@ export function Skills() {
         viewport={{ once: true }}
       >
         <h2 className="section-title">The Arsenal</h2>
-        <p className="section-subtitle">Every piece matters — mastering the board, conquering the wall</p>
       </motion.div>
 
       <div className="skills-container">

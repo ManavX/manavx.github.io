@@ -1,5 +1,5 @@
 import { useSmoothScroll } from './hooks/useSmoothScroll';
-import { FrameByFrameGif } from './components/FrameByFrameGif';
+import { Scene3DBackground } from './components/Scene3DBackground';
 import { Hero } from './components/Hero';
 import { HorizontalProjects } from './components/HorizontalProjects';
 import { Skills } from './components/Skills';
@@ -10,7 +10,7 @@ import { ChessPieceNav } from './components/ChessPieceNav';
 import './App.css';
 
 function App() {
-  const scrollProgress = useSmoothScroll();
+  useSmoothScroll();
 
   const scrollToSection = (section: 'skills' | 'projects' | 'experience') => {
     const element = document.getElementById(section);
@@ -23,7 +23,7 @@ function App() {
     <div className="app">
       <ScrollProgress />
       <CustomCursor />
-      <FrameByFrameGif scrollProgress={scrollProgress} />
+      <Scene3DBackground />
       <ChessPieceNav onScrollTo={scrollToSection} />
       <Hero />
 
