@@ -32,7 +32,6 @@ export function Projects() {
                   <h3>{project.name}</h3>
                   <p className="project-period">{project.period}</p>
                 </div>
-                <span className="project-grade">{project.grade}</span>
               </div>
 
               <div className="project-tech">
