@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState, useEffect } from 'react';
+import { useRef, useMemo, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sparkles } from '@react-three/drei';
 import { useScroll } from 'framer-motion';
@@ -108,7 +108,6 @@ function CameraController() {
 }
 
 interface AsteroidProps {
-  id: string;
   position: { x: number; y: number; z: number };
   velocity: { x: number; y: number; z: number };
   rotation: { x: number; y: number; z: number };
@@ -116,7 +115,7 @@ interface AsteroidProps {
   onRemove: () => void;
 }
 
-function Asteroid({ id, position, velocity, rotation, size, onRemove }: AsteroidProps) {
+function Asteroid({ position, velocity, rotation, size, onRemove }: AsteroidProps) {
   const meshRef = useRef<THREE.Mesh>(null);
   const currentPos = useRef({ x: position.x, y: position.y, z: position.z });
 
@@ -210,7 +209,6 @@ function AsteroidsLayer() {
       {asteroids.map((asteroid) => (
         <Asteroid
           key={asteroid.id}
-          id={asteroid.id}
           position={asteroid.position}
           velocity={asteroid.velocity}
           rotation={asteroid.rotation}
