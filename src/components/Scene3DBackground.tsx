@@ -113,14 +113,11 @@ interface AsteroidProps {
   velocity: { x: number; y: number; z: number };
   rotation: { x: number; y: number; z: number };
   size: number;
-  onDestroy: () => void;
   onRemove: () => void;
 }
 
-function Asteroid({ id, position, velocity, rotation, size, onDestroy, onRemove }: AsteroidProps) {
+function Asteroid({ id, position, velocity, rotation, size, onRemove }: AsteroidProps) {
   const meshRef = useRef<THREE.Mesh>(null);
-  const [hovered, setHovered] = useState(false);
-  const [destroying, setDestroying] = useState(false);
   const currentPos = useRef({ x: position.x, y: position.y, z: position.z });
 
   // Create randomized asteroid geometry
@@ -140,7 +137,7 @@ function Asteroid({ id, position, velocity, rotation, size, onDestroy, onRemove 
   }, [size]);
 
   useFrame(() => {
-    if (meshRef.current && !destroying) {
+    if (meshRef.current) {
       // Update position
       currentPos.current.x += velocity.x;
       currentPos.current.y += velocity.y;
@@ -153,31 +150,18 @@ function Asteroid({ id, position, velocity, rotation, size, onDestroy, onRemove 
       meshRef.current.rotation.y += 0.01;
       meshRef.current.rotation.z += 0.005;
 
-      // Remove if off-screen
+      // Remove if off-screen (expanded bounds so they stay visible longer)
       if (
-        currentPos.current.x < -20 ||
-        currentPos.current.x > 20 ||
-        currentPos.current.y < -15 ||
-        currentPos.current.y > 15 ||
-        currentPos.current.z > 20
+        currentPos.current.x < -30 ||
+        currentPos.current.x > 30 ||
+        currentPos.current.y < -25 ||
+        currentPos.current.y > 25 ||
+        currentPos.current.z > 30
       ) {
-        onRemove();
-      }
-    } else if (meshRef.current && destroying) {
-      // Destruction animation
-      meshRef.current.scale.multiplyScalar(0.9);
-      if (meshRef.current.scale.x < 0.1) {
         onRemove();
       }
     }
   });
-
-  const handleClick = (e: any) => {
-    e.stopPropagation();
-    setDestroying(true);
-    onDestroy();
-    document.body.style.cursor = 'none';
-  };
 
   return (
     <mesh
@@ -185,22 +169,9 @@ function Asteroid({ id, position, velocity, rotation, size, onDestroy, onRemove 
       geometry={geometry}
       position={[position.x, position.y, position.z]}
       rotation={[rotation.x, rotation.y, rotation.z]}
-      onClick={handleClick}
-      onPointerOver={(e) => {
-        e.stopPropagation();
-        setHovered(true);
-        document.body.style.cursor = 'crosshair';
-      }}
-      onPointerOut={(e) => {
-        e.stopPropagation();
-        setHovered(false);
-        document.body.style.cursor = 'none';
-      }}
     >
       <meshStandardMaterial
-        color={hovered ? '#FF6B6B' : '#8B7355'}
-        emissive={hovered ? '#FF6B6B' : '#000000'}
-        emissiveIntensity={hovered ? 0.5 : 0}
+        color="#8B7355"
         roughness={0.9}
         metalness={0.1}
       />
@@ -209,11 +180,29 @@ function Asteroid({ id, position, velocity, rotation, size, onDestroy, onRemove 
 }
 
 function AsteroidsLayer() {
-  const { asteroids, destroyAsteroid, removeAsteroid, spawnAsteroids } = useAsteroidGame();
+  const { asteroids, removeAsteroid, spawnAsteroids } = useAsteroidGame();
+  const asteroidsRef = useRef(asteroids);
 
-  // Spawn initial asteroids on mount
+  // Keep ref updated
   useEffect(() => {
-    spawnAsteroids(6);
+    asteroidsRef.current = asteroids;
+  }, [asteroids]);
+
+  // Spawn initial asteroids on mount only
+  useEffect(() => {
+    spawnAsteroids(8);
+  }, [spawnAsteroids]);
+
+  // Set up periodic spawning with max limit to prevent buildup when tab is inactive
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Only spawn if we have fewer than 20 asteroids to prevent buildup
+      if (asteroidsRef.current.length < 20) {
+        spawnAsteroids(4);
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, [spawnAsteroids]);
 
   return (
@@ -226,7 +215,6 @@ function AsteroidsLayer() {
           velocity={asteroid.velocity}
           rotation={asteroid.rotation}
           size={asteroid.size}
-          onDestroy={() => destroyAsteroid(asteroid.id)}
           onRemove={() => removeAsteroid(asteroid.id)}
         />
       ))}
