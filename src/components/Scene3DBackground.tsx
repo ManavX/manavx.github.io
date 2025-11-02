@@ -1,8 +1,9 @@
-import { useRef, useMemo } from 'react';
+import { useRef, useMemo, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { Sparkles } from '@react-three/drei';
 import { useScroll } from 'framer-motion';
 import * as THREE from 'three';
+import { useAsteroidGame } from '../contexts/AsteroidGameContext';
 
 function ChessParticles() {
   const particlesRef = useRef<THREE.Points>(null);
@@ -106,6 +107,133 @@ function CameraController() {
   return null;
 }
 
+interface AsteroidProps {
+  id: string;
+  position: { x: number; y: number; z: number };
+  velocity: { x: number; y: number; z: number };
+  rotation: { x: number; y: number; z: number };
+  size: number;
+  onDestroy: () => void;
+  onRemove: () => void;
+}
+
+function Asteroid({ id, position, velocity, rotation, size, onDestroy, onRemove }: AsteroidProps) {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const [hovered, setHovered] = useState(false);
+  const [destroying, setDestroying] = useState(false);
+  const currentPos = useRef({ x: position.x, y: position.y, z: position.z });
+
+  // Create randomized asteroid geometry
+  const geometry = useMemo(() => {
+    const geo = new THREE.IcosahedronGeometry(size, 1);
+    const positions = geo.attributes.position.array;
+
+    // Randomize vertices for irregular shape
+    for (let i = 0; i < positions.length; i += 3) {
+      positions[i] += (Math.random() - 0.5) * size * 0.3;
+      positions[i + 1] += (Math.random() - 0.5) * size * 0.3;
+      positions[i + 2] += (Math.random() - 0.5) * size * 0.3;
+    }
+
+    geo.computeVertexNormals();
+    return geo;
+  }, [size]);
+
+  useFrame(() => {
+    if (meshRef.current && !destroying) {
+      // Update position
+      currentPos.current.x += velocity.x;
+      currentPos.current.y += velocity.y;
+      currentPos.current.z += velocity.z;
+
+      meshRef.current.position.set(currentPos.current.x, currentPos.current.y, currentPos.current.z);
+
+      // Rotate asteroid
+      meshRef.current.rotation.x += 0.01;
+      meshRef.current.rotation.y += 0.01;
+      meshRef.current.rotation.z += 0.005;
+
+      // Remove if off-screen
+      if (
+        currentPos.current.x < -20 ||
+        currentPos.current.x > 20 ||
+        currentPos.current.y < -15 ||
+        currentPos.current.y > 15 ||
+        currentPos.current.z > 20
+      ) {
+        onRemove();
+      }
+    } else if (meshRef.current && destroying) {
+      // Destruction animation
+      meshRef.current.scale.multiplyScalar(0.9);
+      if (meshRef.current.scale.x < 0.1) {
+        onRemove();
+      }
+    }
+  });
+
+  const handleClick = (e: any) => {
+    e.stopPropagation();
+    setDestroying(true);
+    onDestroy();
+    document.body.style.cursor = 'none';
+  };
+
+  return (
+    <mesh
+      ref={meshRef}
+      geometry={geometry}
+      position={[position.x, position.y, position.z]}
+      rotation={[rotation.x, rotation.y, rotation.z]}
+      onClick={handleClick}
+      onPointerOver={(e) => {
+        e.stopPropagation();
+        setHovered(true);
+        document.body.style.cursor = 'crosshair';
+      }}
+      onPointerOut={(e) => {
+        e.stopPropagation();
+        setHovered(false);
+        document.body.style.cursor = 'none';
+      }}
+    >
+      <meshStandardMaterial
+        color={hovered ? '#FF6B6B' : '#8B7355'}
+        emissive={hovered ? '#FF6B6B' : '#000000'}
+        emissiveIntensity={hovered ? 0.5 : 0}
+        roughness={0.9}
+        metalness={0.1}
+      />
+    </mesh>
+  );
+}
+
+function AsteroidsLayer() {
+  const { asteroids, destroyAsteroid, removeAsteroid, spawnAsteroids } = useAsteroidGame();
+
+  // Spawn initial asteroids on mount
+  useEffect(() => {
+    spawnAsteroids(6);
+  }, [spawnAsteroids]);
+
+  return (
+    <>
+      {asteroids.map((asteroid) => (
+        <Asteroid
+          key={asteroid.id}
+          id={asteroid.id}
+          position={asteroid.position}
+          velocity={asteroid.velocity}
+          rotation={asteroid.rotation}
+          size={asteroid.size}
+          onDestroy={() => destroyAsteroid(asteroid.id)}
+          onRemove={() => removeAsteroid(asteroid.id)}
+        />
+      ))}
+    </>
+  );
+}
+
 export function Scene3DBackground() {
   return (
     <div className="scene-3d-background">
@@ -136,6 +264,7 @@ export function Scene3DBackground() {
         <ChessParticles />
         <GridBackground />
         <Sparkles count={50} scale={15} size={2} speed={0.3} color="#667eea" />
+        <AsteroidsLayer />
 
         {/* Camera controller */}
         <CameraController />

@@ -537,6 +537,32 @@ body {
   text-transform: uppercase;
 }
 
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  border-radius: 15px;
+  padding: 0.8rem 1.5rem;
+  margin-left: auto;
+}
+
+.score-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.score-value {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #FFD700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  min-width: 2rem;
+  text-align: center;
+}
+
 /* Projects Section */
 .projects-section {
   position: relative;

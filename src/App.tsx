@@ -7,6 +7,7 @@ import { Experience } from './components/Experience';
 import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
 import { ChessPieceNav } from './components/ChessPieceNav';
+import { AsteroidGameProvider } from './contexts/AsteroidGameContext';
 import './App.css';
 
 function App() {
@@ -20,25 +21,27 @@ function App() {
   };
 
   return (
-    <div className="app">
-      <ScrollProgress />
-      <CustomCursor />
-      <Scene3DBackground />
-      <ChessPieceNav onScrollTo={scrollToSection} />
-      <Hero />
+    <AsteroidGameProvider>
+      <div className="app">
+        <ScrollProgress />
+        <CustomCursor />
+        <Scene3DBackground />
+        <ChessPieceNav onScrollTo={scrollToSection} />
+        <Hero />
 
-      <div id="projects">
-        <HorizontalProjects />
-      </div>
+        <div id="projects">
+          <HorizontalProjects />
+        </div>
 
-      <div id="skills">
-        <Skills />
-      </div>
+        <div id="skills">
+          <Skills />
+        </div>
 
-      <div id="experience">
-        <Experience />
+        <div id="experience">
+          <Experience />
+        </div>
       </div>
-    </div>
+    </AsteroidGameProvider>
   );
 }
 

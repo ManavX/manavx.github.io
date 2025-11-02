@@ -1,10 +1,12 @@
 import { motion } from 'framer-motion';
+import { useAsteroidGame } from '../contexts/AsteroidGameContext';
 
 interface ChessPieceNavProps {
   onScrollTo: (section: 'skills' | 'projects' | 'experience') => void;
 }
 
 export function ChessPieceNav({ onScrollTo }: ChessPieceNavProps) {
+  const { score, spawnAsteroids } = useAsteroidGame();
   const chessPieces = [
     {
       id: 'projects',
@@ -29,6 +31,11 @@ export function ChessPieceNav({ onScrollTo }: ChessPieceNavProps) {
     },
   ];
 
+  const handleNavClick = (section: 'skills' | 'projects' | 'experience') => {
+    spawnAsteroids(4);
+    onScrollTo(section);
+  };
+
   return (
     <motion.nav
       className="chess-piece-nav"
@@ -41,7 +48,7 @@ export function ChessPieceNav({ onScrollTo }: ChessPieceNavProps) {
           <motion.button
             key={piece.id}
             className="chess-piece-button"
-            onClick={() => onScrollTo(piece.id as 'skills' | 'projects' | 'experience')}
+            onClick={() => handleNavClick(piece.id as 'skills' | 'projects' | 'experience')}
             title={piece.title}
             style={{ '--piece-color': piece.color } as React.CSSProperties}
             initial={{ opacity: 0, y: -20 }}
@@ -54,6 +61,16 @@ export function ChessPieceNav({ onScrollTo }: ChessPieceNavProps) {
             <span className="chess-label">{piece.label}</span>
           </motion.button>
         ))}
+
+        <motion.div
+          className="score-display"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, delay: 0.5 }}
+        >
+          <span className="score-icon">🎯</span>
+          <span className="score-value">{score}</span>
+        </motion.div>
       </div>
     </motion.nav>
   );

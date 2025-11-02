@@ -1,11 +1,14 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 import { resumeData } from '../data/resumeData';
+import { useAsteroidGame } from '../contexts/AsteroidGameContext';
 
 export function Experience() {
   const [expandedIndex, setExpandedIndex] = useState<number | null>(null);
+  const { spawnAsteroids } = useAsteroidGame();
 
   const toggleExpand = (index: number) => {
+    spawnAsteroids(3);
     setExpandedIndex(expandedIndex === index ? null : index);
   };
 
