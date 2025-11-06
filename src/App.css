@@ -83,6 +83,7 @@ body {
 }
 
 .hero h1 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 5rem;
   font-weight: 900;
   background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -91,13 +92,16 @@ body {
   background-clip: text;
   margin-bottom: 1rem;
   text-shadow: 0 0 40px rgba(102, 126, 234, 0.3);
+  letter-spacing: 2px;
 }
 
 .hero h2 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 2rem;
-  font-weight: 300;
+  font-weight: 400;
   color: #a0a0a0;
   margin-bottom: 2rem;
+  letter-spacing: 1px;
 }
 
 .hero-subtitle {
@@ -125,6 +129,149 @@ body {
   }
 }
 
+/* Intro Textbox - Cyberpunk Style */
+.intro-textbox {
+  position: relative;
+  max-width: 1000px;
+  width: 90%;
+  margin: 0 auto 3rem;
+  padding: 2rem 2.5rem;
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(5px);
+  border: 2px solid transparent;
+  border-radius: 12px;
+  box-shadow:
+    0 0 20px rgba(102, 126, 234, 0.3),
+    0 0 40px rgba(118, 75, 162, 0.2),
+    inset 0 0 20px rgba(102, 126, 234, 0.05);
+  z-index: 100;
+  animation: glow-pulse 3s ease-in-out infinite;
+}
+
+.intro-textbox::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(135deg, #667eea, #764ba2, #FF6B6B, #667eea);
+  background-size: 300% 300%;
+  border-radius: 12px;
+  z-index: -1;
+  animation: gradient-rotate 4s linear infinite;
+}
+
+.intro-textbox::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 10, 10, 0.9);
+  border-radius: 10px;
+  z-index: -1;
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow:
+      0 0 20px rgba(102, 126, 234, 0.3),
+      0 0 40px rgba(118, 75, 162, 0.2),
+      inset 0 0 20px rgba(102, 126, 234, 0.05);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(102, 126, 234, 0.5),
+      0 0 60px rgba(118, 75, 162, 0.3),
+      inset 0 0 30px rgba(102, 126, 234, 0.1);
+  }
+}
+
+@keyframes gradient-rotate {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.intro-textbox-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: #e0e0e0;
+  margin: 0;
+  text-shadow: 0 0 10px rgba(102, 126, 234, 0.3);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.intro-textbox-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.2em;
+  background: linear-gradient(135deg, #667eea, #764ba2);
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
+  box-shadow: 0 0 10px rgba(102, 126, 234, 0.8);
+}
+
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.intro-textbox-close {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  width: 28px;
+  height: 28px;
+  background: rgba(255, 107, 107, 0.1);
+  border: 1px solid rgba(255, 107, 107, 0.3);
+  border-radius: 6px;
+  color: #FF6B6B;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  z-index: 10;
+  backdrop-filter: blur(5px);
+}
+
+.intro-textbox-close:hover {
+  background: rgba(255, 107, 107, 0.2);
+  border-color: rgba(255, 107, 107, 0.6);
+  box-shadow: 0 0 15px rgba(255, 107, 107, 0.4);
+  transform: scale(1.1);
+}
+
+.intro-textbox-close:active {
+  transform: scale(0.95);
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .intro-textbox {
+    max-width: 95%;
+    margin-bottom: 2rem;
+    padding: 1.5rem 1.8rem 1.5rem 2.8rem;
+  }
+
+  .intro-textbox-text {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    letter-spacing: 0.3px;
+  }
+}
+
 /* Sections */
 .section {
   position: relative;
@@ -137,6 +284,7 @@ body {
 }
 
 .section-title {
+  font-family: 'Orbitron', sans-serif;
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 1rem;
@@ -145,6 +293,7 @@ body {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-align: center;
+  letter-spacing: 1.5px;
 }
 
 .section-subtitle {
@@ -170,7 +319,7 @@ body {
 
 .project-card {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   border-radius: 20px;
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -214,9 +363,12 @@ body {
 }
 
 .project-card h3 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
   color: #ffffff;
+  font-weight: 600;
+  letter-spacing: 0.5px;
 }
 
 .project-period {
@@ -282,11 +434,13 @@ body {
 }
 
 .skills-category h3 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.5rem;
   color: #667eea;
   margin-bottom: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 2px;
+  font-weight: 700;
 }
 
 .skills-grid {
@@ -345,7 +499,7 @@ body {
 
 .experience-card {
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   border-radius: 20px;
   padding: 2.5rem;
   border-left: 4px solid #667eea;
@@ -375,9 +529,12 @@ body {
 }
 
 .experience-card h3 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.8rem;
   color: #ffffff;
   margin-bottom: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .experience-role {
@@ -464,15 +621,15 @@ body {
   pointer-events: none !important;
 }
 
-/* Chess Piece Navigation */
-.chess-piece-nav {
+/* Space Navigation */
+.space-nav {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 100;
   background: rgba(10, 10, 10, 0.8);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem 0;
 }
@@ -486,10 +643,10 @@ body {
   gap: 2rem;
 }
 
-.chess-piece-button {
+.space-nav-button {
   position: relative;
   background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(5px);
   border: 2px solid rgba(255, 255, 255, 0.1);
   border-radius: 15px;
   padding: 0.8rem 1.5rem;
@@ -502,35 +659,35 @@ body {
   color: #ffffff;
 }
 
-.chess-piece-button::before {
+.space-nav-button::before {
   content: '';
   position: absolute;
   left: 0;
   top: 0;
   bottom: 0;
   width: 4px;
-  background: var(--piece-color, #667eea);
+  background: var(--item-color, #667eea);
   transform: scaleY(0);
   transition: transform 0.3s ease;
 }
 
-.chess-piece-button:hover::before {
+.space-nav-button:hover::before {
   transform: scaleY(1);
 }
 
-.chess-piece-button:hover {
+.space-nav-button:hover {
   background: rgba(255, 255, 255, 0.15);
-  border-color: var(--piece-color, #667eea);
+  border-color: var(--item-color, #667eea);
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.chess-icon {
+.space-icon {
   font-size: 1.8rem;
   line-height: 1;
   filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
 }
 
-.chess-label {
+.space-label {
   font-weight: 600;
   font-size: 0.95rem;
   letter-spacing: 0.5px;
@@ -566,7 +723,7 @@ body {
 
 .horizontal-project-card {
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
   border-radius: 20px;
   padding: 2rem;
   border: 1px solid rgba(255, 255, 255, 0.1);
@@ -598,11 +755,14 @@ body {
 }
 
 .horizontal-project-card h3 {
+  font-family: 'Orbitron', sans-serif;
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
   color: #ffffff;
   position: relative;
   z-index: 1;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .expand-indicator {
@@ -674,15 +834,15 @@ body {
     gap: 1rem;
   }
 
-  .chess-piece-button {
+  .space-nav-button {
     padding: 0.7rem 1.2rem;
   }
 
-  .chess-icon {
+  .space-icon {
     font-size: 1.5rem;
   }
 
-  .chess-label {
+  .space-label {
     font-size: 0.85rem;
   }
 
@@ -727,7 +887,7 @@ body {
 }
 
 @media (max-width: 480px) {
-  .chess-piece-nav {
+  .space-nav {
     padding: 0.8rem 0;
   }
 
@@ -737,16 +897,16 @@ body {
     flex-wrap: wrap;
   }
 
-  .chess-piece-button {
+  .space-nav-button {
     padding: 0.6rem 1rem;
     gap: 0.5rem;
   }
 
-  .chess-icon {
+  .space-icon {
     font-size: 1.3rem;
   }
 
-  .chess-label {
+  .space-label {
     font-size: 0.75rem;
   }
 

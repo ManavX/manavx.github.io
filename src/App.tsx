@@ -6,7 +6,7 @@ import { Skills } from './components/Skills';
 import { Experience } from './components/Experience';
 import { CustomCursor } from './components/CustomCursor';
 import { ScrollProgress } from './components/ScrollProgress';
-import { ChessPieceNav } from './components/ChessPieceNav';
+import { SpaceNav } from './components/SpaceNav';
 import { AsteroidGameProvider } from './contexts/AsteroidGameContext';
 import './App.css';
 
@@ -26,7 +26,7 @@ function App() {
         <ScrollProgress />
         <CustomCursor />
         <Scene3DBackground />
-        <ChessPieceNav onScrollTo={scrollToSection} />
+        <SpaceNav onScrollTo={scrollToSection} />
         <Hero />
 
         <div id="projects">

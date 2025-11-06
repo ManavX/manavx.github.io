@@ -20,7 +20,7 @@ export const resumeData = {
       company: "TideSpark",
       role: "AI Automation & DevOps Engineer",
       period: "Aug 2025 - Present",
-      chessRank: "Grandmaster",
+      missionLevel: "Grandmaster",
       highlights: [
         "Designed and optimized CI/CD pipelines for automated build, test, and deployment of microservices and ML models",
         "Developed and managed container infrastructure with Docker and Kubernetes for scalable AI workloads",
@@ -32,7 +32,7 @@ export const resumeData = {
       company: "Operto",
       role: "Full Stack Developer & IT Intern",
       period: "Jan 2025 - Aug 2025",
-      chessRank: "Master",
+      missionLevel: "Master",
       highlights: [
         "Developed and maintained Prefect workflows in Python to automate business processes and reduce manual effort",
         "Resolved issues across SQL, APIs, JavaScript apps, and AWS services including S3 and Cognito",
@@ -45,7 +45,7 @@ export const resumeData = {
       company: "YMCA BC",
       role: "Information Systems Coordinator",
       period: "Sep 2022 - Apr 2023",
-      chessRank: "Expert",
+      missionLevel: "Expert",
       highlights: [
         "Worked in a six-person IT team managing infrastructure and technical operations across all YMCA sites in British Columbia",
         "Used Azure Active Directory and MS Intune to deploy devices, manage users, and enforce security and compliance policies",
@@ -61,7 +61,7 @@ export const resumeData = {
       name: "Multiplayer IO Game",
       tech: ["JavaScript", "NodeJS", "SocketIO"],
       period: "Oct 2024 - Dec 2024",
-      chessRank: "Grandmaster",
+      missionLevel: "Grandmaster",
       description: "Developing a real-time multiplayer browser game enabling players to compete in an open arena with leaderboard tracking",
       highlights: [
         "Developing a real-time multiplayer browser game enabling players to compete in an open arena with leaderboard tracking",
@@ -74,7 +74,7 @@ export const resumeData = {
       name: "EduLink Platform",
       tech: ["ReactJS", "NodeJS", "Google Cloud"],
       period: "Jan 2024 - Apr 2024",
-      chessRank: "Master",
+      missionLevel: "Master",
       description: "An innovative educational web application that seamlessly connects students with tutors or peers based on similar academic interests",
       highlights: [
         "Spearheaded the development and implementation of EduLink, an innovative educational web application that seamlessly connects students with tutors or peers based on similar academic interests",
@@ -87,7 +87,7 @@ export const resumeData = {
       name: "Spotify Playlist Curator",
       tech: ["ReactJS", "Axios", "MySQL"],
       period: "May 2023 - Sep 2023",
-      chessRank: "Expert",
+      missionLevel: "Expert",
       description: "A ReactJS application that analyzes a user's Spotify account to generate curated playlists",
       highlights: [
         "Created a ReactJS application that analyzes a user's Spotify account to generate curated playlists",
@@ -101,7 +101,7 @@ export const resumeData = {
       name: "NHL Statistics Website",
       tech: ["Java", "JavaScript", "HTML", "CSS"],
       period: "May 2022 - Aug 2022",
-      chessRank: "Intermediate",
+      missionLevel: "Intermediate",
       description: "Team project creating an NHL Statistics Website using Springboot framework",
       highlights: [
         "Utilized the NHL API, Bootstrap for formatting, Thymeleaf for HTML processing",
@@ -117,7 +117,7 @@ export const resumeData = {
     period: "Jan 2020 - 2025"
   },
 
-  interests: ["Chess", "Gaming", "Fitness", "Music", "Bouldering"]
+  interests: ["Gaming", "Fitness", "Music", "Bouldering", "Space Exploration"]
 };
 
 export type Project = typeof resumeData.projects[0];

@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
 import { resumeData } from '../data/resumeData';
+import { IntroTextBox } from './IntroTextBox';
 
 export function Hero() {
   const ref = useRef<HTMLElement>(null);
@@ -19,6 +20,8 @@ export function Hero() {
         className="hero-content"
         style={{ opacity, scale, y }}
       >
+        <IntroTextBox />
+
         <motion.h1
           initial={{ opacity: 0, y: -50 }}
           animate={{ opacity: 1, y: 0 }}
