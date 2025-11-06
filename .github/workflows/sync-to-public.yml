@@ -12,23 +12,18 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Fetch all history for proper sync
-
-      - name: Configure Git with PAT
-        env:
-          PAT_TOKEN: ${{ secrets.SYNC_TOKEN }}
-        run: |
-          git config --global user.name "ManavX"
-          git config --global user.email "github-actions@users.noreply.github.com"
-          git config --global url."https://${PAT_TOKEN}@github.com/".insteadOf "https://github.com/"
+          fetch-depth: 0
+          persist-credentials: false  # Don't use the default GITHUB_TOKEN
 
       - name: Push to public repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
-          set -x  # Enable debug mode
-          git remote remove public 2>/dev/null || true
-          git remote add public https://github.com/ManavX/manavx.github.io.git
+          git config user.name "ManavX"
+          git config user.email "github-actions@users.noreply.github.com"
+
+          # Use token directly in URL
+          git remote add public "https://ManavX:${GITHUB_TOKEN}@github.com/ManavX/manavx.github.io.git"
+
           echo "Pushing to public repository..."
-          git push public master --force --verbose 2>&1 || {
-            echo "Push failed with exit code $?"
-            exit 1
-          }
+          git push public master --force
