@@ -32,11 +32,11 @@ jobs:
 
       - name: Push to public repository
         env:
-          GITHUB_TOKEN: ${{ secrets.SYNC_TOKEN }}
+          PAT_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
           set -x  # Enable debug mode
           git remote remove public 2>/dev/null || true
-          git remote add public https://x-access-token:${GITHUB_TOKEN}@github.com/ManavX/manavx.github.io.git
+          git remote add public https://$PAT_TOKEN@github.com/ManavX/manavx.github.io.git
           echo "Pushing to public repository..."
           git push public master --force --verbose 2>&1 || {
             echo "Push failed with exit code $?"
