@@ -19,10 +19,26 @@ jobs:
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
 
+      - name: Debug - Check token
+        run: |
+          if [ -z "${{ secrets.SYNC_TOKEN }}" ]; then
+            echo "ERROR: SYNC_TOKEN is not set!"
+            exit 1
+          else
+            echo "SYNC_TOKEN is set (length: ${#SYNC_TOKEN})"
+          fi
+        env:
+          SYNC_TOKEN: ${{ secrets.SYNC_TOKEN }}
+
       - name: Push to public repository
         env:
           GITHUB_TOKEN: ${{ secrets.SYNC_TOKEN }}
         run: |
+          set -x  # Enable debug mode
           git remote remove public 2>/dev/null || true
           git remote add public https://x-access-token:${GITHUB_TOKEN}@github.com/ManavX/manavx.github.io.git
-          git push public master --force
+          echo "Pushing to public repository..."
+          git push public master --force --verbose 2>&1 || {
+            echo "Push failed with exit code $?"
+            exit 1
+          }
