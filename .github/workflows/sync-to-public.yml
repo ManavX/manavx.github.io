@@ -1,0 +1,22 @@
+name: Sync to Public Repo
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Fetch all history for proper sync
+
+      - name: Push to public repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.SYNC_TOKEN }}
+        run: |
+          git remote add public https://x-access-token:${GITHUB_TOKEN}@github.com/ManavX/manavx.github.io.git
+          git push public master --force
